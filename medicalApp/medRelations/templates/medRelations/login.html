@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ClinicOrg~Login</title>
+	<style>
+		.login-box {
+			width: 390px;
+			height: 578px;
+			background-color: #d9d9d9;
+			top: 0px;
+			left: 890px;
+			position: absolute;
+			box-sizing: border-box;
+			border: 4px solid #ffffff;
+			border-radius: 10px;
+		}
+
+		.Logo {
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				border-radius: 50px;
+				top: 100px;
+				left: 138px;
+				border: 1.5px solid #17202A;
+		}
+
+		body {
+			background-image: url('{% static 'medRelations/images/loginView.png' %}');
+			background-repeat: no-repeat;
+ 			background-attachment: fixed;
+ 			background-position: left;
+			background-size: 70%;
+		}
+
+		.emailClass {
+			top:220px;
+		}
+
+		.pswClass {
+			top:255px;
+		}
+
+		.inputClass{
+			width: 320px;
+			padding: 7px;
+			border-radius: 25px;
+			left: 20px;
+			position: absolute;
+		}
+
+		.loginButton {
+			left: 70px;
+			width: 230px;
+			color: white;
+			top:304px;
+			padding: 7px 7px;
+			position: absolute;
+			border-radius: 25px;
+			background-color:  #25DE83;
+		}
+
+		.loginButton:hover {
+			background-color: #8EA41B;
+			color: white;
+		}
+
+		.backButton {
+			border-radius: 25px;
+			background-color: #3793D4;
+			color: white;
+			text-align: center;
+			width: 130px;
+			top:340px;
+			left: 120px;
+			padding: 4px;
+			position: absolute;
+		}
+
+		.backButton:hover {
+			background-color: #00477D;
+			color: white;
+		}
+
+		.alert {
+			top: 368px;
+			left: 60px;
+			padding: 20px;
+			background-color: #f44336;
+			color: white;
+			position: absolute;
+		}
+
+		.closebtn {
+			margin-left: 15px;
+			color: white;
+			font-weight: bold;
+			float: right;
+			font-size: 22px;
+			line-height: 20px;
+			cursor: pointer;
+			transition: 0.3s;
+		}
+
+		.closebtn:hover {
+			color: black;
+		}
+
+	</style>
+</head>
+<body>
+  <div class="login-box">
+	  	<img src="{% static 'medRelations/images/Logo.png' %}" class="Logo">
+			<!-- <form method="post" > {% csrf_token %}
+				{% for field in loginForm %}
+					{{field}}
+					{% for error in field.errors %}
+						<div class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>{{error}}
+						</div>
+					{% endfor %}
+				{% endfor %}
+				<input type="submit" value="Log in" class="loginButton">
+			</form> -->
+			<input type="submit" value="Log in" class="loginButton">
+			<input type="button" class="backButton" value="Back to register">
+  </div>
+</body>
+</html>

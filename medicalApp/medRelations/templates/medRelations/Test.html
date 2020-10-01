@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>ClinicOrg</title>
+		<style>
+			.login-box {
+				width: 440px;
+				height: 530px;
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+				top: 312px;
+				left: 395px;
+				position: absolute;
+				transform: translate(-50%, -50%);
+				box-sizing: border-box;
+				border-radius: 25px;
+				border: 2px solid #17202A;
+			}
+
+			.logo {
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				border-radius: 50px;
+				top: -50px;
+				left: calc(50% - 50px);
+			}
+
+			.nameClass {
+				top: 55px;
+			}
+
+			.emailClass {
+				top: 90px;
+			}
+
+			.addressClass {
+				top: 125px;
+			}
+
+			.psw1Class {
+				top: 160px;
+			}
+
+			.psw2Class {
+				top: 195px;
+			}
+
+			.inputClass {
+			  width: 350px;
+			  padding: 7px 7px;
+			  border-radius: 25px;
+			  left: 35px;
+			  position: absolute;
+				required;
+			}
+
+			input[type=submit] {
+				left: 100px;
+				width: 230px;
+				color: white;
+				border-radius: 25px;
+				padding: 7px 7px;
+				position: absolute;
+				background-color: #25DE83;
+			}
+			.logButton {
+				width: 350px;
+				padding: 7px 7px;
+				left: 100px;
+				width: 230px;
+				color: white;
+				background-color: #3793D4;
+				color: white;
+				border-radius: 25px;
+				position: absolute;
+				text-align: center;top: 200px;
+				top:320px;
+				cursor: pointer;
+			}
+			.logButton:hover {
+			  background-color: #00477D;
+			  color: white;
+			}
+
+			.registerButton:hover {
+			  background-color: #4CAF50;
+			  color: white;
+			}
+
+			hr {
+			  display: block;
+			  margin-top: 278px;
+			  margin-left: 37px;
+			  margin-right: 35px;
+			  border-style: inset;
+			  border-width: 1px;
+			}
+			.alert {
+				top: 368px;
+				left: 60px;
+			  padding: 20px;
+			  background-color: #f44336;
+			  color: white;
+			  position: absolute;
+			}
+
+			.closebtn {
+			  margin-left: 15px;
+			  color: white;
+			  font-weight: bold;
+			  float: right;
+			  font-size: 22px;
+			  line-height: 20px;
+			  cursor: pointer;
+			  transition: 0.3s;
+			}
+
+			.closebtn:hover {
+			  color: black;
+			}
+
+			body {
+			  background-image: url('{% static 'medRelations/images/poza2.png' %}');
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="login-box">
+			<img src="{% static 'medRelations/images/Logo.png' %}"  class="logo">
+			<div>
+				<form method="post" > {% csrf_token %}
+					{% for field in registration_form%}
+						{{field}}
+						{% for error in field.errors %}
+							<div class="alert">
+								<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>{{error}}
+							</div>
+						{% endfor %}
+					{% endfor %}
+					<input style=top:230px type="submit" value="Sign up" class="registerButton">
+				</form>
+				<hr>
+				<h4 style="margin-top:10px;margin-left:125px;color:#ffffff ;"><u>Already have an account?</u></h4>
+				<a href="{% url 'loginView' %}">
+    			<input type="button" class="logButton" value="Log in to your account">
+				</a>
+			</div>
+		</div>
+	</body>
+</html>
