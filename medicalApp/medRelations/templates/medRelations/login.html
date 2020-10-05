@@ -35,14 +35,6 @@
 			background-size: 70%;
 		}
 
-		.emailClass {
-			top:220px;
-		}
-
-		.pswClass {
-			top:255px;
-		}
-
 		.inputClass{
 			width: 320px;
 			padding: 7px;
@@ -108,24 +100,32 @@
 			color: black;
 		}
 
+		p {
+			top: 50px;
+			left: 100px;
+			position: absolute;
+			color: red;
+		}
+
 	</style>
 </head>
 <body>
   <div class="login-box">
 	  	<img src="{% static 'medRelations/images/Logo.png' %}" class="Logo">
-			<!-- <form method="post" > {% csrf_token %}
-				{% for field in loginForm %}
-					{{field}}
-					{% for error in field.errors %}
-						<div class="alert">
-							<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>{{error}}
-						</div>
-					{% endfor %}
-				{% endfor %}
+			<form method="post" action="{% url 'userLogin' %}">
+				{% csrf_token %}
+				{% if error_message %}
+					<div class="alert">
+						<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>{{error_message}}
+					</div>
+				{% endif %}
+				<input name="username" type="text" placeholder="Email" class="inputClass" style=top:220px required>
+				<input name="password" type="password" placeholder="Password" class="inputClass" style=top:255px required>
 				<input type="submit" value="Log in" class="loginButton">
-			</form> -->
-			<input type="submit" value="Log in" class="loginButton">
-			<input type="button" class="backButton" value="Back to register">
+			</form>
+			<a href="{% url 'registration' %}">
+				<input type="button" class="backButton" value="Back to register">
+			</a>
   </div>
 </body>
 </html>

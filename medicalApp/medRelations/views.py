@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import registerForm, authenticationForm
+from .forms import registerForm
+from django.contrib.auth.decorators import login_required
 
 def registrationView(request):
     context = {}
@@ -20,27 +21,22 @@ def registrationView(request):
         context['registration_form'] = form
     return render(request,'medRelations/Test.html', context)
 
-def loginView(request):
+def loginPageView(request):
     return render(request, 'medRelations/login.html')
 
 def authView(request):
-    context = {}
-    user = request.user
-    if user.is_authenticated:
-        return redirect('myAccount')
-    if request.POST:
-        form = authenticationForm(request.POST)
-        if form.is_valid:
-            email = request.POST['email']
-            password = request.POST['password']
-            account = authenticate(email=email, password=password)
-            if account:
-                login(request,account)
-                return redirect('myAccount')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect('myAccount')
+        else:
+            return render(request, 'loginPageView', {'error_message': 'Invalid login!'})
     else:
-        form = authenticationForm()
-    context['loginForm'] = form;
-    return render(request, "medRelations.login.html", context)
+        return render(request, 'loginPageView')
 
+@login_required
 def accountView(request):
     return render(request, 'medRelations/account.html')

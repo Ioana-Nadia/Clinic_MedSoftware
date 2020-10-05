@@ -15,16 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+
 from medRelations.views import (
     registrationView,
-    loginView,
+    loginPageView,
     accountView,
     authView,
 )
 urlpatterns = [
     path('', registrationView, name='registration'),
     path('admin/', admin.site.urls),
-    path('loginPage', loginView, name='loginView'),
+    path('loginPage', loginPageView, name='loginPageView'),
     path('home', accountView, name='myAccount'),
-    path('Login', authView, name='loginPath'),
+    path('login', authView, name='userLogin'),
 ]
