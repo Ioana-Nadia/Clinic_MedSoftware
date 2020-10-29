@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import registerForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Patient, Intervention
 
 def registrationView(request):
     context = {}
@@ -40,3 +42,23 @@ def authView(request):
 @login_required
 def accountView(request):
     return render(request, 'medRelations/account.html')
+
+def newPatient(request):
+    firstName = request.POST['firstName']
+    lastName = request.POST['lastName']
+    address = request.POST['address']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    cnp = request.POST['cnp']
+    allergies = request.POST['allergies']
+    diseases = request.POST['diseases']
+    currentTreatment = request.POST['currentTreatment']
+    patient = Patient(firstName=firstName, lastName=lastName, address=address, email=email, phone=phone, cnp=cnp, allergies=allergies, diseases=diseases, currentTreatment=currentTreatment)
+    patient.save()
+    return redirect('myAccount')
+
+def newIntervention(request):
+    interventionName = request.POST['interventionName']
+    intervention = Intervention(interventionName=interventionName)
+    intervention.save()
+    return redirect('myAccount')
