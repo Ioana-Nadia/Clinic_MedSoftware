@@ -52,21 +52,22 @@ class Clinic(AbstractUser):
     def has_module_perms(self, app_label):
         return True
 
+class Patient(models.Model):
+    patientsClinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, null=True)
+    firstName = models.CharField(max_length=30, blank=False)
+    lastName = models.CharField(max_length=30, blank=False)
+    address = models.CharField(max_length=30, blank=False)
+    email = models.CharField(max_length=101, blank=True)
+    phone = models.CharField(max_length=20, blank=False)
+    cnp = models.CharField(max_length=15)
+    allergies = models.CharField(max_length=250, default="No allergies")
+    diseases = models.CharField(max_length=250, default="No diseases")
+    currentTreatment = models.CharField(max_length=250, default="No treatment")
+    def __str__(self):
+        return self.email
 
-# @receiver(post_save, sender=User)
-# def update_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#     instance.profile.save()
-
-# class Patient(models.Model):
-#     patiensClinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
-#     firstName = models.CharField(max_length=30, blank=False)
-#     lastName = models.CharField(max_length=30, blank=False)
-#     address = models.CharField(max_length=30, blank=False)
-#     email = models.CharField(max_length=101, blank=True)
-#     phone = models.CharField(max_length=20, blank=False)
-#     cnp = models.CharField(max_length=15, primary_key = True)
-#     allergies = models.CharField(max_length=250, default="No allergies")
-#     diseases = models.CharField(max_length=250, default="No diseases")
-#     currentTreatment = models.CharField(max_length=250, default="No treatment")
+class Intervention(models.Model):
+    interventionsClinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, null=True)
+    interventionName = models.CharField(max_length=60, blank=False, unique=True)
+    def __str__(self):
+        return self.interventionName

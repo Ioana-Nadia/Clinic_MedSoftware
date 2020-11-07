@@ -75,6 +75,136 @@
 				background-color: #FE540C;
 			}
 
+			.closebtn {
+				top: 10px;
+				margin-left: 15px;
+				color: white;
+				font-weight: bold;
+				float: right;
+				font-size: 22px;
+				line-height: 20px;
+				cursor: pointer;
+				transition: 0.3s;
+			}
+
+			.closebtn:hover {
+				color: black;
+			}
+
+			#patientsPanel{
+				position: absolute;
+				width: 960px;
+				height: 540px;
+				left: 150px;
+				border-radius: 25px;
+			  font-size: 16px;
+			  padding: 10px;
+			  text-align: center;
+			  background-color: #FFF8DC;
+			  color: white;
+			  border: solid 2px #FED558;
+			  margin: auto;
+			}
+
+			#addPatient {
+				position: absolute;
+				color: #fff;
+				width: 480px;
+				height: 539px;
+				left: 390px;
+				border-radius: 25px;
+				font-size: 16px;
+				padding: 10px;
+				text-align: center;
+				background-color: #242526;
+				border: solid 2.5px #4CAF50;
+				margin: auto;
+			}
+
+			#addIntervention {
+				position: absolute;
+				color: #fff;
+				width: 480px;
+				height: 269px;
+				top: 130px;
+				left: 385px;
+				border-radius: 25px;
+				border: solid 2.5px #4CAF50;
+				text-align: center;
+				background-color: #242526;
+				padding: 10px;
+			}
+
+			#interventionPanel {
+				position: absolute;
+				width: 960px;
+				height: 540px;
+				left: 150px;
+				border-radius: 25px;
+				font-size: 16px;
+				padding: 10px;
+				text-align: center;
+				background-color: #FFF8DC;
+				color: white;
+				border: solid 2px #32CD32;
+				margin: auto;
+			}
+
+			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention {
+			  display: none;
+			}
+
+			.outline-text {
+				text-shadow:-1px -1px 0 #000,
+				1px -1px 0 #000,
+				-1px 1px 0 #000,
+				1px 1px 0 #000;
+			}
+
+			.addButton {
+				position: absolute;
+				left: 10px;
+				background-color: #FED558;
+				color: white;
+				width: 100px;
+				height: 25px;
+				border-radius: 25px;
+			}
+
+			.addIButton {
+				position: absolute;
+				left: 10px;
+				background-color: #32CD32;
+				color: white;
+				width: 150px;
+				height: 25px;
+				border-radius: 25px;
+			}
+
+			.inputClass {
+				width: 350px;
+				padding: 7px 7px;
+				border-radius: 25px;
+				background-color: #FFF8DC;
+				left: 67px;
+				position: absolute;
+			}
+
+			.submitButton {
+				position: absolute;
+				padding: 7px;
+				width: 250px;
+				left: 130px;
+				background-color: #4CAF50;
+				border-radius: 25px;
+				color: #fff;
+			}
+
+			.submitButton:hover {
+				background-color: #1CCB2D;
+				color: white;
+			}
+
 			body {
 				background-color: #18191A;
 			}
@@ -87,12 +217,79 @@
 			<img src="{% static 'medRelations/images/Logo.png' %}" class="Logo">
 		</div>
 		<div>
-			<button class="patientsButton button"><i class="fas fa-hospital-user" style="font-size:100px;color:white;"></i><br><strong>Patients</strong></button>
+			<button class="patientsButton button" onclick="patientsList()"><i class="fas fa-hospital-user" style="font-size:100px;color:white;"></i><br><strong>Patients</strong></button>
 			<button class="doctorsButton button"><i class="fa fa-user-md" style="font-size:100px;color:white"></i><br><strong>Doctors</strong></button>
-			<button class="interventionsButton button"><i class='fas fa-tooth' style='font-size:90px;color:white'></i><br><strong>Interventions</strong></button>
+			<button class="interventionsButton button" onclick="interventionsList()"><i class='fas fa-tooth' style='font-size:90px;color:white'></i><br><strong>Interventions</strong></button>
 			<a href="{% url 'registration' %}">
 				<button class="logoutButton button"><i class="fas fa-sign-out-alt"style='font-size:60px;color:white'></i><br><strong>Log out</strong></button>
 			</a>
 		</div>
+		<div id="patientsPanel">
+			<button class="addButton outline-text" onclick="addNewPatient()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add patient</button>
+		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h3 class="outline-text">The patients of {{user.username}}</h3>
+		</div>
+		<div id="addPatient">
+		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h3 class="outline-text" style=margin-left:33px>Complete the fields below to add a new patient</h3>
+			<form method="post" action="newPatient"> {% csrf_token %}
+				<input class="inputClass" name="firstName" type="text" placeholder="First Name" style=top:65px required><br>
+				<input class="inputClass" name="lastName" type="text" placeholder="Last Name" style=top:100px required><br>
+				<input class="inputClass" name="address" type="text" placeholder="Address" style=top:135px required><br>
+				<input class="inputClass" name="email" type="text" placeholder="Email" style=top:170px><br>
+				<input class="inputClass" name="phone" type="text" placeholder="Phone" style=top:205px required><br>
+				<input class="inputClass" name="cnp" type="text" placeholder="Cnp" style=top:240px required><br>
+				<input class="inputClass" name="allergies" type="text" placeholder="Allergies" style=top:275px required><br>
+				<input class="inputClass" name="diseases" type="text" placeholder="Diseases" style=top:310px required><br>
+				<input class="inputClass" name="currentTreatment" type="text" placeholder="Current Treatment" style=top:345px required><br>
+				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:385px>
+				<!-- {% if messages %}
+					<ul class="messages">
+					    {% for message in messages %}
+					    	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+					    {% endfor %}
+					</ul>
+				{% endif %} -->
+			</form>
+		</div>
+		<div id="interventionPanel">
+			<button class="addIButton outline-text"  onclick="addNewIntervention()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add intervention</button>
+			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h3 class="outline-text">The interventions offered by {{user.username}}</h3>
+			<p>This panel contains a div element, which is hidden by default (display: none).</p>
+			<p>It is styled with CSS and we use JavaScript to show it (display: block).</p>
+			<p>How it works: Notice that the p element with class="flip" has an onclick attribute attached to it. When the user clicks on the p element, a function called myFunction() is executed, which changes the style of the div with id="panel" from display:none (hidden) to display:block (visible).</p>
+			<p>You will learn more about JavaScript in our JavaScript Tutorial.</p>
+		</div>
+		<div id="addIntervention">
+			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h3 class="outline-text" style="margin-top:40px;">Complete the field below to add a new intervention</h3>
+			<form method="post" action="newIntervention"> {% csrf_token %}
+				<input class="inputClass" name="interventionName" type="text" placeholder="Intervention's name" style=top:100px required><br>
+				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:145px>
+				<!-- {% if messages %}
+					<ul class="messages">
+							{% for message in messages %}
+								<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+							{% endfor %}
+					</ul>
+				{% endif %} -->
+			</form>
+		</div>
+		<script>
+			function patientsList() {
+			  document.getElementById("patientsPanel").style.display = "block";
+			}
+			function addNewPatient() {
+				 document.getElementById("addPatient").style.display = "block";
+			}
+			function interventionsList() {
+				document.getElementById("interventionPanel").style.display = "block";
+			}
+			function addNewIntervention() {
+				 document.getElementById("addIntervention").style.display = "block";
+			}
+
+		</script>
 	</body>
 </html>

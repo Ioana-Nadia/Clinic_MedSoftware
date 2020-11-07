@@ -21,6 +21,8 @@ from medRelations.views import (
     loginPageView,
     accountView,
     authView,
+    newPatient,
+    newIntervention,
 )
 urlpatterns = [
     path('', registrationView, name='registration'),
@@ -28,4 +30,6 @@ urlpatterns = [
     path('loginPage', loginPageView, name='loginPageView'),
     path('home', accountView, name='myAccount'),
     path('login', authView, name='userLogin'),
+    path('newPatient', newPatient, name='newPatient'),
+    path('newIntervention', newIntervention, name='newIntervention'),
 ]

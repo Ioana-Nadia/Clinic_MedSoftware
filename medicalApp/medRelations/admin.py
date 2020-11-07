@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from medRelations.models import Clinic
+from medRelations.models import Clinic, Patient, Intervention
 
 class adminAccount(UserAdmin):
     list_display = ('email', 'username', 'address', 'date_joined', 'last_login', 'is_admin', 'is_staff',)
@@ -11,3 +11,5 @@ class adminAccount(UserAdmin):
     fieldsets = ()
 
 admin.site.register(Clinic, adminAccount)
+admin.site.register(Patient)
+admin.site.register(Intervention)
