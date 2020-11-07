@@ -150,7 +150,17 @@
 				margin: auto;
 			}
 
-			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention {
+			#patientsList, #interventionsList {
+				position:absolute;
+				left: 35px;
+				width: 900px;
+				height: 300px;
+				border-radius: 25px;
+				color:black;
+				background-color:red;
+			}
+
+			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention, #patientsList {
 			  display: none;
 			}
 
@@ -164,7 +174,6 @@
 			.addButton {
 				position: absolute;
 				left: 10px;
-				background-color: #FED558;
 				color: white;
 				width: 100px;
 				height: 25px;
@@ -205,6 +214,19 @@
 				color: white;
 			}
 
+			.table {
+				left: 10px;
+				top: 10px;
+				position: absolute;
+				width:860px;
+				border: 0.5px solid #17202A;
+			}
+
+			.thead-table {
+				background-color:grey;
+				color:white;
+			}
+
 			body {
 				background-color: #18191A;
 			}
@@ -225,9 +247,34 @@
 			</a>
 		</div>
 		<div id="patientsPanel">
-			<button class="addButton outline-text" onclick="addNewPatient()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add patient</button>
+			<button class="addButton outline-text" style="top:5px;background-color:#FED558;" onclick="addNewPatient()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add patient</button>
+			<button class="addButton outline-text" style="top:33px;background-color:#691188;text-align:center;" onclick="displayPatientsList()"><i class="fas fa-align-justify" style="color:white"></i> Patients</button>
 		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
-			<h3 class="outline-text">The patients of {{user.username}}</h3>
+			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
+			<div id="patientsList">
+					<table class="table" border=1 frame=void rules='all'>
+						<thead class="thead-table">
+							<tr>
+								<th scope="col">First Name</th>
+								<th scope="col">Last Name</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<form method="get" action="viewPatients"> {% csrf_token %}
+							{% for patient in patientsForm %}
+								<tbody>
+									<tr>
+										<td>{{patient.firstName}}</td>
+										<td>{{patient.lastName}}</td>
+										<td>{{patient.phone}}</td>
+										<td>More</td>
+									</tr>
+								</tbody>
+							{% endfor %}
+						</form>
+					</table>
+			</div>
 		</div>
 		<div id="addPatient">
 		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -243,23 +290,13 @@
 				<input class="inputClass" name="diseases" type="text" placeholder="Diseases" style=top:310px required><br>
 				<input class="inputClass" name="currentTreatment" type="text" placeholder="Current Treatment" style=top:345px required><br>
 				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:385px>
-				<!-- {% if messages %}
-					<ul class="messages">
-					    {% for message in messages %}
-					    	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-					    {% endfor %}
-					</ul>
-				{% endif %} -->
 			</form>
 		</div>
 		<div id="interventionPanel">
 			<button class="addIButton outline-text"  onclick="addNewIntervention()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add intervention</button>
+			<button class="addIButton outline-text" style="top:38px;background-color:#C96E80;text-align:center;" onclick="displayPatientsList()"><i class="fas fa-align-justify" style="color:white"></i> Interventions</button>
 			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
-			<h3 class="outline-text">The interventions offered by {{user.username}}</h3>
-			<p>This panel contains a div element, which is hidden by default (display: none).</p>
-			<p>It is styled with CSS and we use JavaScript to show it (display: block).</p>
-			<p>How it works: Notice that the p element with class="flip" has an onclick attribute attached to it. When the user clicks on the p element, a function called myFunction() is executed, which changes the style of the div with id="panel" from display:none (hidden) to display:block (visible).</p>
-			<p>You will learn more about JavaScript in our JavaScript Tutorial.</p>
+			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
 		</div>
 		<div id="addIntervention">
 			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -267,18 +304,12 @@
 			<form method="post" action="newIntervention"> {% csrf_token %}
 				<input class="inputClass" name="interventionName" type="text" placeholder="Intervention's name" style=top:100px required><br>
 				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:145px>
-				<!-- {% if messages %}
-					<ul class="messages">
-							{% for message in messages %}
-								<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-							{% endfor %}
-					</ul>
-				{% endif %} -->
 			</form>
 		</div>
 		<script>
 			function patientsList() {
 			  document.getElementById("patientsPanel").style.display = "block";
+				document.getElementById("patientsList").style.display = "none";
 			}
 			function addNewPatient() {
 				 document.getElementById("addPatient").style.display = "block";
@@ -289,7 +320,9 @@
 			function addNewIntervention() {
 				 document.getElementById("addIntervention").style.display = "block";
 			}
-
+			function displayPatientsList() {
+				document.getElementById("patientsList").style.display = "block";
+			}
 		</script>
 	</body>
 </html>

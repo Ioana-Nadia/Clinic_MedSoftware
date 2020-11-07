@@ -62,3 +62,7 @@ def newIntervention(request):
     intervention = Intervention(interventionName=interventionName)
     intervention.save()
     return redirect('myAccount')
+
+def viewPatients(request):
+    patients = Patient.objects.all()
+    return render(request, 'medRelations/account.html', {'patientsForm':patients})
