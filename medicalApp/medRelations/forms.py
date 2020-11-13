@@ -12,8 +12,3 @@ class registerForm(UserCreationForm):
     class Meta:
          model = Clinic
          fields = ('username', 'email', 'address', 'password1', 'password2', )
-
-# class displayForm(forms.ModelForm):
-#     class Meta:
-#         model = Patient
-#         fields = '__all__'
