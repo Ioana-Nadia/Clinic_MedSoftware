@@ -65,4 +65,10 @@ def newIntervention(request):
 
 def viewPatients(request):
     patients = Patient.objects.all()
-    return render(request, 'medRelations/account.html', {'patientsForm':patients})
+    print("Aici!!")
+    return render(request, 'medRelations/account.html', {'patientsForm': patients})
+
+def viewInterventions(request):
+    interventions = Intervention.objects.all()
+    print("Aici!!")
+    return render(request, 'medRelations/account.html', {'interventionsForm' : interventions})

@@ -160,7 +160,7 @@
 				background-color:red;
 			}
 
-			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention, #patientsList {
+			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention, #patientsList, #interventionsList {
 			  display: none;
 			}
 
@@ -252,28 +252,27 @@
 		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
 			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
 			<div id="patientsList">
-					<table class="table" border=1 frame=void rules='all'>
-						<thead class="thead-table">
+				<table class="table" border=1 frame=void rules='all'>
+					<thead class="thead-table">
+						<tr>
+							<th scope="col">First Name</th>
+							<th scope="col">Last Name</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<form method="get" action="viewPatients">
+						{% csrf_token %}
+						{% for patient in patientsForm %}
 							<tr>
-								<th scope="col">First Name</th>
-								<th scope="col">Last Name</th>
-								<th scope="col">Phone</th>
-								<th scope="col">Actions</th>
+								<td>{{patient.firstName}}</td>
+								<td>{{patient.lastName}}</td>
+								<td>{{patient.phone}}</td>
+								<!-- <td>More</td> -->
 							</tr>
-						</thead>
-						<form method="get" action="viewPatients"> {% csrf_token %}
-							{% for patient in patientsForm %}
-								<tbody>
-									<tr>
-										<td>{{patient.firstName}}</td>
-										<td>{{patient.lastName}}</td>
-										<td>{{patient.phone}}</td>
-										<td>More</td>
-									</tr>
-								</tbody>
-							{% endfor %}
-						</form>
-					</table>
+						{% endfor %}
+					</form>
+				</table>
 			</div>
 		</div>
 		<div id="addPatient">
@@ -294,9 +293,29 @@
 		</div>
 		<div id="interventionPanel">
 			<button class="addIButton outline-text"  onclick="addNewIntervention()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add intervention</button>
-			<button class="addIButton outline-text" style="top:38px;background-color:#C96E80;text-align:center;" onclick="displayPatientsList()"><i class="fas fa-align-justify" style="color:white"></i> Interventions</button>
+			<button class="addIButton outline-text" style="top:38px;background-color:#C96E80;text-align:center;" onclick="displayInterventionsList()"><i class="fas fa-align-justify" style="color:white"></i> Interventions</button>
 			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
 			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
+			<div id="interventionsList">
+				<table class="table" border=1 frame=void rules='all'>
+		  		<thead class="thead-table">
+						<tr>
+			  			<th scope="col">Intervention's name</th>
+			  			<th scope="col">Actions</th>
+						</tr>
+		  		</thead>
+					<form method="get" action="viewInterventions"> {% csrf_token %}
+						{% for interv in interventionsForm %}
+							<tr>
+								<td style="margin-right:50px;">{{interv.interventionName}}</td>
+								<td>
+									<button style="background-color:red;width:100%">Delete</button>
+								</td>
+							</tr>
+						{% endfor %}
+					</form>
+				</table>
+			</div>
 		</div>
 		<div id="addIntervention">
 			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -316,12 +335,16 @@
 			}
 			function interventionsList() {
 				document.getElementById("interventionPanel").style.display = "block";
+				document.getElementById("interventionsList").style.display = "none";
 			}
 			function addNewIntervention() {
 				 document.getElementById("addIntervention").style.display = "block";
 			}
 			function displayPatientsList() {
 				document.getElementById("patientsList").style.display = "block";
+			}
+			function displayInterventionsList() {
+				document.getElementById("interventionsList").style.display = "block";
 			}
 		</script>
 	</body>
