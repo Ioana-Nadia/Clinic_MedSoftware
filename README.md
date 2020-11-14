@@ -1,5 +1,5 @@
 # Clinic_MedSoftware
-  I have created this project this year.
+  I have created this project this year. It's still in progress.
   
   It is also my first more complex application. For this, I have used Python, Django, PostgreSQL, HTML, CSS, and JavaScript.
   
