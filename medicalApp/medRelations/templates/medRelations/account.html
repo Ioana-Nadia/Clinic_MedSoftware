@@ -45,6 +45,10 @@
 				border-radius: 25px 0px 0px 0px;
 			}
 
+			.patientsButton:hover {
+				background-color: #FFE184;
+			}
+
 			.doctorsButton {
 				width: 340px;
 				height: 170px;
@@ -55,6 +59,11 @@
 				border-radius: 0px 25px 0px 0px;
 			}
 
+			.doctorsButton:hover {
+				background-color: #2A51BE;
+			}
+
+
 			.interventionsButton {
 				width: 340px;
 				height: 170px;
@@ -63,6 +72,11 @@
 				left: 560px;
 				position: absolute;
 			}
+
+			.interventionsButton:hover {
+				background-color: #3DFF3D;
+			}
+
 
 			.logoutButton {
 				width: 540px;
@@ -74,6 +88,11 @@
 				border-radius: 0px 0px 25px 25px;
 				background-color: #FE540C;
 			}
+
+			.logoutButton:hover {
+				background-color: #FF753A;
+			}
+
 
 			.closebtn {
 				top: 10px;
@@ -152,12 +171,14 @@
 
 			#patientsList, #interventionsList {
 				position:absolute;
+				top: 68px;
 				left: 35px;
-				width: 900px;
-				height: 300px;
+				width: 902px;
+				height: 480px;
 				border-radius: 25px;
 				color:black;
-				background-color:red;
+				background-color: #FFF8DC;
+				overflow: auto;
 			}
 
 			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention, #patientsList, #interventionsList {
@@ -214,12 +235,34 @@
 				color: white;
 			}
 
+			.detailsButton {
+				background-color: green;
+				color: white;
+				width: 50%;
+			}
+
+			.detailsButton:hover {
+				background-color: #1CCB2D;
+				color: white;
+			}
+
+			.deleteButton {
+				background-color: #FD0F00;
+				color: white;
+				width: 50%;
+			}
+
+			.deleteButton:hover {
+				background-color: #D10707;
+				color: white;
+			}
+
 			.table {
-				left: 10px;
-				top: 10px;
+				left: 24px;
+				top: 0px;
 				position: absolute;
 				width:860px;
-				border: 0.5px solid #17202A;
+				border: 1px solid #17202A;
 			}
 
 			.thead-table {
@@ -251,9 +294,9 @@
 			<button class="addButton outline-text" style="top:33px;background-color:#691188;text-align:center;" onclick="displayPatientsList()"><i class="fas fa-align-justify" style="color:white"></i> Patients</button>
 		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
 			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
-			<div id="patientsList">
+			<div id="patientsList" overflow: auto:>
 				<table class="table" border=1 frame=void rules='all'>
-					<thead class="thead-table">
+					<thead class="thead-table outline-text">
 						<tr>
 							<th scope="col">First Name</th>
 							<th scope="col">Last Name</th>
@@ -261,17 +304,8 @@
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
-					<form method="get" action="viewPatients">
-						{% csrf_token %}
-						{% for patient in patientsForm %}
-							<tr>
-								<td>{{patient.firstName}}</td>
-								<td>{{patient.lastName}}</td>
-								<td>{{patient.phone}}</td>
-								<!-- <td>More</td> -->
-							</tr>
-						{% endfor %}
-					</form>
+					<tbody id="displayPatients">
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -304,16 +338,8 @@
 			  			<th scope="col">Actions</th>
 						</tr>
 		  		</thead>
-					<form method="get" action="viewInterventions"> {% csrf_token %}
-						{% for interv in interventionsForm %}
-							<tr>
-								<td style="margin-right:50px;">{{interv.interventionName}}</td>
-								<td>
-									<button style="background-color:red;width:100%">Delete</button>
-								</td>
-							</tr>
-						{% endfor %}
-					</form>
+					<tbody id="displayInterventions">
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -325,6 +351,43 @@
 				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:145px>
 			</form>
 		</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+		<script>
+			$(document).ready(function(){
+				$.ajax({
+					type:'GET',
+					url: "{% url 'getPatients' %}",
+					success: function(response){
+						$("#displayPatients").empty();
+						for(var key in response.patients) {
+							var temp = "<tr><td>"+response.patients[key].firstName+"</td><td>"+response.patients[key].lastName+"</td><td>"+response.patients[key].phone+"</td><td><button class='detailsButton outline-text'>Details</button><button class='deleteButton outline-text'>Delete</button></td></tr>";
+							$("#displayPatients").append(temp);
+						}
+					},
+					error: function(response){
+						alert("NO DATA FOUND!!!");
+					}
+				});
+			});
+		</script>
+		<script>
+			$(document).ready(function(){
+				$.ajax({
+					type:'GET',
+					url: "{% url 'getInterventions' %}",
+					success: function(response){
+						$("#displayInterventions").empty();
+						for(var key in response.interventions) {
+							var temp = "<tr><td>"+response.interventions[key].interventionName+"</td><td><button class='detailsButton outline-text'>Edit</button><button class='deleteButton outline-text'>Delete</button></td></tr>";
+							$("#displayInterventions").append(temp);
+						}
+					},
+					error: function(response){
+						alert("NO DATA FOUND!!!");
+					}
+				});
+			});
+		</script>
 		<script>
 			function patientsList() {
 			  document.getElementById("patientsPanel").style.display = "block";
