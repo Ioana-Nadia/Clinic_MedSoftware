@@ -8,8 +8,8 @@ from medRelations.views import (
     authView,
     newPatient,
     newIntervention,
-    viewPatients,
-    viewInterventions,
+    getPatients,
+    getInterventions,
 )
 urlpatterns = [
     path('', registrationView, name='registration'),
@@ -19,6 +19,6 @@ urlpatterns = [
     path('login', authView, name='userLogin'),
     path('newPatient', newPatient, name='newPatient'),
     path('newIntervention', newIntervention, name='newIntervention'),
-    path('viewPatients', viewPatients, name='viewPatients'),
-    path('viewInterventions', viewInterventions, name='viewInterventions'),
+    path('ajax/getPatients', getPatients, name='getPatients'),
+    path('ajax/getInterventions', getInterventions, name='getInterventions'),
 ]

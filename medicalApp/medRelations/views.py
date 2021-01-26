@@ -4,6 +4,7 @@ from .forms import registerForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Patient, Intervention
+from django.http import JsonResponse
 
 def registrationView(request):
     context = {}
@@ -63,12 +64,10 @@ def newIntervention(request):
     intervention.save()
     return redirect('myAccount')
 
-def viewPatients(request):
-    patients = Patient.objects.all()
-    print("Aici!!")
-    return render(request, 'medRelations/account.html', {'patientsForm': patients})
+def getPatients(request):
+    querySet = Patient.objects.all()
+    return JsonResponse({"patients":list(querySet.values())})
 
-def viewInterventions(request):
-    interventions = Intervention.objects.all()
-    print("Aici!!")
-    return render(request, 'medRelations/account.html', {'interventionsForm' : interventions})
+def getInterventions(request):
+    querySet = Intervention.objects.all()
+    return JsonResponse({"interventions":list(querySet.values())})
