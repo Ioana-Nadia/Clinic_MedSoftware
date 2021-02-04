@@ -71,3 +71,12 @@ class Intervention(models.Model):
     interventionName = models.CharField(max_length=60, blank=False, unique=True)
     def __str__(self):
         return self.interventionName
+
+class Doctor(models.Model):
+    doctorsClinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, null=True)
+    firstName = models.CharField(max_length=30, blank=False)
+    lastName = models.CharField(max_length=30, blank=False)
+    email = models.CharField(max_length=101, blank=True)
+    phone = models.CharField(max_length=20, blank=False)
+    def __str__(self):
+        return self.email

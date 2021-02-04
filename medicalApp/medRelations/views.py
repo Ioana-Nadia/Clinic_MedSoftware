@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from .forms import registerForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Patient, Intervention
+from .models import Patient, Intervention, Doctor
 from django.http import JsonResponse
 
 def registrationView(request):
@@ -64,9 +64,22 @@ def newIntervention(request):
     intervention.save()
     return redirect('myAccount')
 
+def newDoctor(request):
+    firstName = request.POST['firstName']
+    lastName = request.POST['lastName']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    doctor = Doctor(firstName=firstName, lastName=lastName, email=email, phone=phone)
+    doctor.save()
+    return redirect('myAccount')
+
 def getPatients(request):
     querySet = Patient.objects.all()
     return JsonResponse({"patients":list(querySet.values())})
+
+def getDoctors(request):
+    querySet = Doctor.objects.all()
+    return JsonResponse({"doctors":list(querySet.values())})
 
 def getInterventions(request):
     querySet = Intervention.objects.all()

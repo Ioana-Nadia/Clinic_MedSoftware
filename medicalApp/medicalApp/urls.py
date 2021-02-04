@@ -7,8 +7,10 @@ from medRelations.views import (
     accountView,
     authView,
     newPatient,
+    newDoctor,
     newIntervention,
     getPatients,
+    getDoctors,
     getInterventions,
 )
 urlpatterns = [
@@ -18,7 +20,9 @@ urlpatterns = [
     path('home', accountView, name='myAccount'),
     path('login', authView, name='userLogin'),
     path('newPatient', newPatient, name='newPatient'),
+    path('newDoctor', newDoctor, name='newDoctor'),
     path('newIntervention', newIntervention, name='newIntervention'),
     path('ajax/getPatients', getPatients, name='getPatients'),
+    path('ajax/getDoctors', getDoctors, name='getDoctors'),
     path('ajax/getInterventions', getInterventions, name='getInterventions'),
 ]
