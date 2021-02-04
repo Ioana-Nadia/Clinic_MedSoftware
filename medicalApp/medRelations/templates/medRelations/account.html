@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Your account</title>
+		<title>{{ user.username }}'s account</title>
 		<meta= charset="utf-8">
 		<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>
-			.nameBar {
+			 .nameBar {
 				margin-top: 0px;
 				margin-left: 0px;
 				position: absolute;
@@ -110,7 +110,7 @@
 				color: black;
 			}
 
-			#patientsPanel{
+			#patientsPanel, #doctorsPanel{
 				position: absolute;
 				width: 960px;
 				height: 540px;
@@ -121,7 +121,6 @@
 			  text-align: center;
 			  background-color: #FFF8DC;
 			  color: white;
-			  border: solid 2px #FED558;
 			  margin: auto;
 			}
 
@@ -140,7 +139,7 @@
 				margin: auto;
 			}
 
-			#addIntervention {
+			#addIntervention, #addDoctor {
 				position: absolute;
 				color: #fff;
 				width: 480px;
@@ -169,7 +168,7 @@
 				margin: auto;
 			}
 
-			#patientsList, #interventionsList {
+			#patientsList, #interventionsList, #doctorsList {
 				position:absolute;
 				top: 68px;
 				left: 35px;
@@ -181,7 +180,7 @@
 				overflow: auto;
 			}
 
-			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention, #patientsList, #interventionsList {
+			#patientsPanel,  #addPatient, #interventionPanel, #addIntervention, #patientsList, #interventionsList, #doctorsPanel, #addDoctor, #doctorsList {
 			  display: none;
 			}
 
@@ -283,13 +282,13 @@
 		</div>
 		<div>
 			<button class="patientsButton button" onclick="patientsList()"><i class="fas fa-hospital-user" style="font-size:100px;color:white;"></i><br><strong>Patients</strong></button>
-			<button class="doctorsButton button"><i class="fa fa-user-md" style="font-size:100px;color:white"></i><br><strong>Doctors</strong></button>
+			<button class="doctorsButton button" onclick="doctorsList()"><i class="fa fa-user-md" style="font-size:100px;color:white"></i><br><strong>Doctors</strong></button>
 			<button class="interventionsButton button" onclick="interventionsList()"><i class='fas fa-tooth' style='font-size:90px;color:white'></i><br><strong>Interventions</strong></button>
 			<a href="{% url 'registration' %}">
 				<button class="logoutButton button"><i class="fas fa-sign-out-alt"style='font-size:60px;color:white'></i><br><strong>Log out</strong></button>
 			</a>
 		</div>
-		<div id="patientsPanel">
+		<div id="patientsPanel" style="border: solid 2px #FED558;">
 			<button class="addButton outline-text" style="top:5px;background-color:#FED558;" onclick="addNewPatient()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add patient</button>
 			<button class="addButton outline-text" style="top:33px;background-color:#691188;text-align:center;" onclick="displayPatientsList()"><i class="fas fa-align-justify" style="color:white"></i> Patients</button>
 		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -330,7 +329,7 @@
 			<button class="addIButton outline-text" style="top:38px;background-color:#C96E80;text-align:center;" onclick="displayInterventionsList()"><i class="fas fa-align-justify" style="color:white"></i> Interventions</button>
 			<span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
 			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
-			<div id="interventionsList">
+			<div id="interventionsList" overflow: auto:>
 				<table class="table" border=1 frame=void rules='all'>
 		  		<thead class="thead-table">
 						<tr>
@@ -349,6 +348,37 @@
 			<form method="post" action="newIntervention"> {% csrf_token %}
 				<input class="inputClass" name="interventionName" type="text" placeholder="Intervention's name" style=top:100px required><br>
 				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:145px>
+			</form>
+		</div>
+		<div id="doctorsPanel" style=" border: solid 2px #1F8AC0;">
+			<button class="addButton outline-text" style="top:5px;background-color:#1F8AC0;" onclick="addNewDoctor()"><i class="fas fa-plus outline-text" style="color:white;"></i> Add doctor</button>
+			<button class="addButton outline-text" style="top:33px;background-color:#E9AA7E;text-align:center;" onclick="displayDoctorsList()"><i class="fas fa-align-justify" style="color:white"></i> Doctors</button>
+		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h1 class="outline-text" style=text-align:center>{{user.username}}</h1>
+			<div id="doctorsList" overflow: auto:>
+				<table class="table" border=1 frame=void rules='all'>
+					<thead class="thead-table outline-text">
+						<tr>
+							<th scope="col">First Name</th>
+							<th scope="col">Last Name</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody id="displayDoctors">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="addDoctor">
+		  <span class="closebtn outline-text" onclick="this.parentElement.style.display='none';">&times;</span>
+			<h3 class="outline-text" style=margin-left:33px>Complete the fields below to add a new doctor</h3>
+			<form method="post" action="newDoctor"> {% csrf_token %}
+				<input class="inputClass" name="firstName" type="text" placeholder="First Name" style=top:65px required><br>
+				<input class="inputClass" name="lastName" type="text" placeholder="Last Name" style=top:100px required><br>
+				<input class="inputClass" name="email" type="text" placeholder="Email" style=top:135px required><br>
+				<input class="inputClass" name="phone" type="text" placeholder="Phone" style=top:170px required><br>
+				<input class="submitButton outline-text" name='submit' type="submit" value="Save" style=top:210px>
 			</form>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
@@ -389,26 +419,28 @@
 			});
 		</script>
 		<script>
-			function patientsList() {
-			  document.getElementById("patientsPanel").style.display = "block";
-				document.getElementById("patientsList").style.display = "none";
-			}
-			function addNewPatient() {
-				 document.getElementById("addPatient").style.display = "block";
-			}
-			function interventionsList() {
-				document.getElementById("interventionPanel").style.display = "block";
-				document.getElementById("interventionsList").style.display = "none";
-			}
-			function addNewIntervention() {
-				 document.getElementById("addIntervention").style.display = "block";
-			}
-			function displayPatientsList() {
-				document.getElementById("patientsList").style.display = "block";
-			}
-			function displayInterventionsList() {
-				document.getElementById("interventionsList").style.display = "block";
+			$(document).ready(function(){
+				$.ajax({
+					type:'GET',
+					url: "{% url 'getDoctors' %}",
+					success: function(response){
+						$("#displayDoctors").empty();
+						for(var key in response.doctors) {
+							var temp = "<tr><td>"+response.doctors[key].firstName+"</td><td>"+response.doctors[key].lastName+"</td><td>"+response.doctors[key].phone+"</td><td><button class='detailsButton outline-text'>Details</button><button class='deleteButton outline-text'>Delete</button></td></tr>";
+							$("#displayDoctors").append(temp);
+						}
+					},
+					error: function(response){
+						alert("NO DATA FOUND!!!");
+					}
+				});
+			});
+		</script>
+		<script>
+			function displayDoctorsList() {
+				document.getElementById("doctorsList").style.display = "block";
 			}
 		</script>
+		<script src="{% static 'medRelations/files/Methods.js' %}"></script>
 	</body>
 </html>
