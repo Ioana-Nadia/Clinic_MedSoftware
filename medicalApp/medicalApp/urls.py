@@ -12,6 +12,9 @@ from medRelations.views import (
     getPatients,
     getDoctors,
     getInterventions,
+    deletePatient,
+    deleteIntervention,
+    deleteDoctor,
 )
 urlpatterns = [
     path('', registrationView, name='registration'),
@@ -25,4 +28,7 @@ urlpatterns = [
     path('ajax/getPatients', getPatients, name='getPatients'),
     path('ajax/getDoctors', getDoctors, name='getDoctors'),
     path('ajax/getInterventions', getInterventions, name='getInterventions'),
+    path('deletePatient/<int:id>', deletePatient, name='deletePatient'),
+    path('deleteIntervention/<int:id>', deleteIntervention, name='deleteIntervention'),
+    path('deleteDoctor/<int:id>', deleteDoctor, name='deleteDoctor'),
 ]

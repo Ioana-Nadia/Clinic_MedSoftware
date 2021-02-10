@@ -390,7 +390,7 @@
 					success: function(response){
 						$("#displayPatients").empty();
 						for(var key in response.patients) {
-							var temp = "<tr><td>"+response.patients[key].firstName+"</td><td>"+response.patients[key].lastName+"</td><td>"+response.patients[key].phone+"</td><td><button class='detailsButton outline-text'>Details</button><button class='deleteButton outline-text'>Delete</button></td></tr>";
+							var temp = "<tr><td>"+response.patients[key].firstName+"</td><td>"+response.patients[key].lastName+"</td><td>"+response.patients[key].phone+"</td><td><button class='detailsButton outline-text'>Details</button><a href='deletePatient/"+response.patients[key].id+"'><button class='deleteButton outline-text'>Delete</button></a></td></tr>";
 							$("#displayPatients").append(temp);
 						}
 					},
@@ -408,7 +408,7 @@
 					success: function(response){
 						$("#displayInterventions").empty();
 						for(var key in response.interventions) {
-							var temp = "<tr><td>"+response.interventions[key].interventionName+"</td><td><button class='detailsButton outline-text'>Edit</button><button class='deleteButton outline-text'>Delete</button></td></tr>";
+							var temp = "<tr><td>"+response.interventions[key].interventionName+"</td><td><button class='detailsButton outline-text'>Edit</button><a href='deleteIntervention/"+response.interventions[key].id+"'><button class='deleteButton outline-text'>Delete</button></a></td></tr>";
 							$("#displayInterventions").append(temp);
 						}
 					},
@@ -426,7 +426,7 @@
 					success: function(response){
 						$("#displayDoctors").empty();
 						for(var key in response.doctors) {
-							var temp = "<tr><td>"+response.doctors[key].firstName+"</td><td>"+response.doctors[key].lastName+"</td><td>"+response.doctors[key].phone+"</td><td><button class='detailsButton outline-text'>Details</button><button class='deleteButton outline-text'>Delete</button></td></tr>";
+							var temp = "<tr><td>"+response.doctors[key].firstName+"</td><td>"+response.doctors[key].lastName+"</td><td>"+response.doctors[key].phone+"</td><td><button class='detailsButton outline-text'>Details</button><a href='deleteDoctor/"+response.doctors[key].id+"'><button class='deleteButton outline-text'>Delete</button></a></td></tr>";
 							$("#displayDoctors").append(temp);
 						}
 					},
