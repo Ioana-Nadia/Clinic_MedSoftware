@@ -2,6 +2,7 @@
   I have created this project this year. It's still in progress.
   
   It is also my first more complex application. For this, I have used Python, Django, PostgreSQL, HTML, CSS, and JavaScript.
+  
   I have used Atom for writing my code, because of it the indentation doesn't look good on GitHub( of course in Atom I don't have this problem with the indentation).
   
   Any clinic in the world can create an account (with name, email and address, and password) on this application and the profile is the place where its data can be stored. Clinic_MedSoftware is strictly for staff, clients do not have access to the clinic's database. We can store all the necessary information about patients(first name, last name, address, email, phone, personal identification number, allergies, treatments, and diseases), interventions (name) but also doctors(first name, last name, phone, and email).
