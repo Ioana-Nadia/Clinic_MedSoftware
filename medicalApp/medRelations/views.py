@@ -84,3 +84,18 @@ def getDoctors(request):
 def getInterventions(request):
     querySet = Intervention.objects.all()
     return JsonResponse({"interventions":list(querySet.values())})
+
+def deletePatient(request, id):
+    patients = Patient.objects.get(id=id)
+    patients.delete()
+    return redirect('myAccount')
+
+def deleteIntervention(request, id):
+    interventions = Intervention.objects.get(id=id)
+    interventions.delete()
+    return redirect('myAccount')
+
+def deleteDoctor(request, id):
+    doctors = Doctor.objects.get(id=id)
+    doctors.delete()
+    return redirect('myAccount')
